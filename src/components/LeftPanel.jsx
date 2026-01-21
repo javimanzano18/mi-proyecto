@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Image as ImageIcon, X, Plus, ChevronRight, Smartphone, Diamond, Minus, PenTool, Sparkles } from 'lucide-react';
+import { Send, Image as ImageIcon, X } from 'lucide-react';
 import './LeftPanel.css';
 
 const LeftPanel = () => {
@@ -106,69 +106,44 @@ const LeftPanel = () => {
 
             {/* Input Area */}
             <div className="input-area-wrapper">
-                <div className="prompt-writer-container">
-                    {/* Top Row: Input */}
-                    <div className="prompt-top-row">
-                        <button className="add-ref-btn">
-                            <Plus size={20} />
-                        </button>
-                        <textarea
-                            className="prompt-input-expanded"
-                            placeholder="Describe the scene you imagine"
-                            value={prompt}
-                            onChange={(e) => setPrompt(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                        />
-                    </div>
-
-                    {/* Bottom Row: Controls */}
-                    <div className="prompt-bottom-row">
-                        <div className="prompt-controls">
-                            <button className="control-btn model-selector">
-                                <div className="icon-badge">G</div>
-                                <span>Nano Banana Pro</span>
-                                <ChevronRight size={14} className="chevron" />
+                <div
+                    className={`input-area glass ${isDraggingOver ? 'drag-active' : ''}`}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                >
+                    {attachedImage && (
+                        <div className="attached-image-preview">
+                            <img src={attachedImage.url} alt="Attached" />
+                            <button className="remove-btn btn-reset" onClick={() => setAttachedImage(null)}>
+                                <X size={14} />
                             </button>
-
-                            <button className="control-btn icon-only">
-                                <Smartphone size={16} />
-                                <span>9:16</span>
-                            </button>
-
-                            <button className="control-btn icon-only">
-                                <Diamond size={16} />
-                                <span>2K</span>
-                            </button>
-
-                            <div className="control-btn counter">
-                                <button className="counter-btn" onClick={() => { }}><Minus size={14} /></button>
-                                <span>1/4</span>
-                                <button className="counter-btn" onClick={() => { }}><Plus size={14} /></button>
-                            </div>
-
-                            <button className="control-btn draw-btn">
-                                <PenTool size={16} />
-                                <span>Draw</span>
-                            </button>
-                        </div>
-
-                        <button
-                            className="generate-btn-large"
-                            onClick={handleGenerate}
-                            disabled={isGenerating || (!prompt && !attachedImage)}
-                        >
-                            <span>Generate</span>
-                            <Sparkles size={16} fill="black" />
-                            <span className="cost-badge">2</span>
-                        </button>
-                    </div>
-
-                    {isDraggingOver && (
-                        <div className="drop-overlay">
-                            Drop to Use as Reference
                         </div>
                     )}
+
+                    <textarea
+                        className="prompt-input input-reset"
+                        placeholder={isDraggingOver ? "Drop image here..." : "Describe your imagination..."}
+                        value={prompt}
+                        onChange={(e) => setPrompt(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        rows={1}
+                        style={{ resize: 'none' }}
+                    />
+
+                    <button
+                        className={`send-btn btn-reset ${isGenerating ? 'loading' : ''}`}
+                        onClick={handleGenerate}
+                        disabled={isGenerating || (!prompt && !attachedImage)}
+                    >
+                        {isGenerating ? <div className="spinner" /> : <Send size={20} />}
+                    </button>
                 </div>
+                {isDraggingOver && (
+                    <div className="drop-overlay">
+                        Drop to Use as Reference
+                    </div>
+                )}
             </div>
         </div>
     );
