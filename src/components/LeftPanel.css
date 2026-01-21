@@ -111,139 +111,207 @@
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    width: 90%;
-    max-width: 600px;
+    width: 95%;
+    max-width: 800px;
+    /* Wider for the full controls */
     z-index: 20;
 }
 
-.input-area {
+.prompt-writer-container {
+    background-color: #0F0F11;
+    /* Very dark background */
+    border-radius: 32px;
+    padding: 24px;
+    /* Spacious padding */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: all 0.3s ease;
+}
+
+.prompt-writer-container:focus-within {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Top Row */
+.prompt-top-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.add-ref-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 16px;
+    background-color: #1E1E21;
+    color: #A1A1AA;
+    border: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
     align-items: center;
-    padding: 12px;
-    border-radius: 24px;
-    background: rgba(18, 18, 21, 0.85);
-    /* Darker glass */
-    box-shadow: var(--shadow-lg);
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.input-area.drag-active {
-    transform: scale(1.05);
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3);
-}
-
-.attached-image-preview {
-    position: relative;
-    width: 48px;
-    height: 48px;
-    margin-right: 12px;
-    border-radius: 8px;
-    overflow: hidden;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
     flex-shrink: 0;
-    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-@keyframes popIn {
-    from {
-        transform: scale(0);
-        opacity: 0;
-    }
-
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
+.add-ref-btn:hover {
+    background-color: #2A2A2E;
+    color: #fff;
 }
 
-.attached-image-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.remove-btn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.2s;
-}
-
-.attached-image-preview:hover .remove-btn {
-    opacity: 1;
-}
-
-.prompt-input {
+.prompt-input-expanded {
     flex: 1;
-    color: white;
-    min-height: 24px;
-    max-height: 100px;
-    padding: 4px 8px;
-    font-size: 15px;
+    background: transparent;
+    border: none;
+    color: #FFFFFF;
+    font-size: 18px;
+    font-family: inherit;
+    resize: none;
+    outline: none;
+    min-height: 44px;
+    padding-top: 10px;
+    /* Align with icon */
+    line-height: 1.5;
 }
 
-.prompt-input::placeholder {
-    color: rgba(255, 255, 255, 0.4);
+.prompt-input-expanded::placeholder {
+    color: #555;
+    font-weight: 400;
 }
 
-.send-btn {
-    width: 40px;
+/* Bottom Row */
+.prompt-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    /* Handle smaller screens */
+}
+
+.prompt-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.control-btn {
     height: 40px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
-    color: white;
+    background-color: #1E1E21;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    color: #E4E4E5;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.control-btn:hover {
+    background-color: #2A2A2E;
+}
+
+.icon-only {
+    padding: 0 10px;
+}
+
+.icon-badge {
+    width: 16px;
+    height: 16px;
+    background: #BEF264;
+    /* Lime green like banana */
+    color: black;
+    border-radius: 4px;
+    font-weight: 800;
+    font-size: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 8px;
-    transition: transform 0.2s;
 }
 
-.send-btn:hover:not(:disabled) {
-    transform: scale(1.1) rotate(-10deg);
+.chevron {
+    color: #71717A;
 }
 
-.send-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    filter: grayscale(1);
+.counter {
+    padding: 0 8px;
+    min-width: 80px;
+    justify-content: space-between;
+}
+
+.counter-btn {
+    background: transparent;
+    border: none;
+    color: #A1A1AA;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.counter-btn:hover {
+    color: white;
+}
+
+.draw-btn {
+    /* Optional special styling if needed */
+}
+
+/* Generate Button */
+.generate-btn-large {
+    height: 48px;
+    background-color: #D9F99D;
+    /* Lime 300/400 approx */
+    color: #000;
+    border: none;
+    border-radius: 12px;
+    padding: 0 24px;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.1s, background-color 0.2s;
+    box-shadow: 0 0 15px rgba(217, 249, 157, 0.1);
+}
+
+.generate-btn-large:hover {
+    background-color: #BEF264;
+    transform: scale(1.02);
+}
+
+.generate-btn-large:active {
+    transform: scale(0.98);
+}
+
+.cost-badge {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-left: 2px;
 }
 
 .drop-overlay {
     position: absolute;
-    top: -60px;
+    top: 0;
     left: 0;
     right: 0;
-    text-align: center;
-    color: var(--accent-color);
-    font-weight: 600;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.8);
-    padding: 8px;
-    border-radius: 8px;
-    pointer-events: none;
-    animation: fadeIn 0.2s;
-}
-
-.spinner {
-    width: 18px;
-    height: 18px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 32px;
+    color: #D9F99D;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+    z-index: 50;
 }
